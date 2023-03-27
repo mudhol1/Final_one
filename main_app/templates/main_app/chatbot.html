@@ -1,0 +1,624 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Student Management System</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css'%} ">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet"
+        href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%} ">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css'%} ">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css'%} ">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'%} ">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%} ">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css'%} ">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css'%} ">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        *{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body{
+
+width:100%;
+
+min-height:100vh;
+
+}
+
+.main-container{
+
+margin:0 auto;
+
+width:100%;
+
+height:100%;
+
+max-width:500px;
+
+padding:20px 0;
+
+}
+
+#chatbot-container{
+
+width:95%;
+
+height:350px;
+
+margin:10px auto;
+
+padding:10px 5px;
+
+overflow-y:auto;
+
+background:#f3f3f3;
+
+display:flex;
+
+display:-ms-flexbox;
+
+display:inline-flex;
+
+display:-webkit-flex;
+
+flex-direction: column;
+
+border-radius:10px;
+
+}
+
+.speech::first-letter,
+
+.recorder::first-letter{
+
+text-transform: capitalize;
+
+}
+
+#chatbot-container .recorder{
+
+color:#fff;
+
+background:#78f;
+
+border-radius:5px;
+
+padding:8px;
+
+margin:4px 0;
+
+max-width:250px;
+
+align-self:flex-start;
+
+flex-shrink: 0;
+
+
+
+}
+
+#chatbot-container .speech{
+
+ color:#fff;
+
+background:#1c8;
+
+border-radius:5px;
+
+padding:8px;
+
+margin:4px 0;
+
+flex-shrink: 0;
+
+ align-self:flex-end;
+
+max-width:250px;
+
+}
+
+button{
+
+ border:none;
+
+outline:none;
+
+background:none;
+
+}
+
+.fa-telegram-plane{
+
+font-size:36px;
+
+width:15%;
+
+padding:8px 12px;
+
+line-height: 30px;
+
+cursor: pointer;
+
+display:inline-block;
+
+}
+
+.fa-telegram-plane:hover{
+
+color:#78f;
+
+}
+
+#btn{
+
+background:#78f;
+
+color:whiteSmoke;
+
+padding:10px 25px;
+
+font-size:22px;
+
+font-weight:600;
+
+display:block;
+
+box-shadow:0 3px 10px #a7f;
+
+margin:0 auto ;
+
+ transition:0.5s;
+
+}
+
+#btn:hover{
+
+padding-right: 30px;
+
+background:#6a7;
+
+transition:0.5s;
+
+}
+
+#form{
+
+width:100%;
+
+text-align: center;
+
+margin-bottom: 8px;
+
+}
+
+#form #botvalue{
+
+padding:8px 10px;
+
+border-radius:6px;
+
+outline:none;
+
+width:calc(100% - 18%);
+
+line-height: 30px;
+
+border:1px solid #555;
+
+font-size:17px;
+
+font-weight:normal;
+
+}
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+
+            </ul>
+
+
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+          
+ 
+        {% include "main_app/sidebar_template.html" with user=user %}
+
+      
+        <div class="content-wrapper">
+
+            <!-- Content Wrapper. Contains page content -->
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">{% block page_title %}{% endblock page_title %}</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">{{ page_title }}</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+            <div class="form-group">
+                {% if messages %}
+                {% for message in messages  %}
+    
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success">
+                    {{message}}
+                </div>
+                {% else %}
+                <div class="alert alert-danger">
+                    {{message}}
+                </div>
+                {% endif %}
+    
+                {% endfor %}
+                {% endif %}
+            </div>
+            </div></div></div></section>
+            <!-- /.content -->
+            <div class="content-wrapper">
+                <div class="main-container">
+                  <h4>ChatBot Assistant</h4>
+                   <div id="chatbot-container">
+                
+                   
+                
+                  </div>
+                
+                  <form id="form" method="get" accept-charset="utf-8">
+                
+                   <input type="text" name="botvalue" id="botvalue" placeholder="Say something"/>
+                
+                   <!-- <button type="submit" class="submit fab fa-telegram-plane"></button> -->
+                
+                  </form>
+                
+                  
+                
+                </div>
+                </div>
+        </div>
+        <!-- /.content-wrapper -->
+        {% include "main_app/footer.html" %}
+
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js'%} "></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{% static 'plugins/jquery-ui/jquery-ui.min.js'%} "></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%} "></script>
+    <!-- ChartJS -->
+    <script src="{% static 'plugins/chart.js/Chart.min.js'%} "></script>
+    <!-- Sparkline -->
+    <script src="{% static 'plugins/sparklines/sparkline.js'%} "></script>
+    <!-- JQVMap -->
+    <script src="{% static 'plugins/jqvmap/jquery.vmap.min.js'%} "></script>
+    <script src="{% static 'plugins/jqvmap/maps/jquery.vmap.usa.js'%} "></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{% static 'plugins/jquery-knob/jquery.knob.min.js'%} "></script>
+    <!-- daterangepicker -->
+    <script src="{% static 'plugins/moment/moment.min.js'%} "></script>
+    <script src="{% static 'plugins/daterangepicker/daterangepicker.js'%} "></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%} "></script>
+    <!-- Summernote -->
+    <script src="{% static 'plugins/summernote/summernote-bs4.min.js'%} "></script>
+    <!-- overlayScrollbars -->
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%} "></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.js'%} "></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{% static 'dist/js/pages/dashboard.js'%} "></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'dist/js/demo.js'%} "></script>
+    <script>
+        let container=document.getElementById('chatbot-container');
+      
+      let btn=document.getElementById('btn');
+      
+         let form=document.getElementById('form');
+      
+      let arr1=[
+      
+        { name:"hello",text:"hi"},
+      
+        { name:"i am fine",text:"that's good to hear"},
+      
+          { name:"i\'m fine",text:"that\'s good to hear"},
+      
+        { name:"how are you",text:"i am fine,thanks, how about you?"},
+      
+        {
+      
+      name:"what is your name",text:"my name is vicbot"
+      
+      },
+      
+      {
+      
+      name:"what is No of students",text:"{{size}}"
+      
+      },
+      
+      {
+      
+      name:"what is No of staff",text:"{{si_st}}"
+      
+      },
+      
+      {
+      
+      name:"what is No of course",text:"{{cou}}"
+      
+      },
+      
+        { 
+          name:"what\'s your name",text:"my name is bot"
+        },
+      
+        {
+      
+         name:"do you understand english",text:"sure,that\'s my mother language"
+      
+        },
+      
+        {
+      
+         name:"hi",text:"what\'s up"
+      
+        },
+      
+        {
+      
+         name:"what's up",text:"i'm good,thanks"
+      
+        },
+      
+        {
+      
+         name:"do you have a boyfriend",text:"nah, am single and happy"
+      
+        },
+      
+        {
+      
+         name:"can i be your boyfriend",text:"oh! no, i love our friendship"
+      
+        },
+      
+        {
+      
+         name:"why are you single",text:"because i don't like sharing my dessert "
+      
+        },
+      
+        {
+      
+         name:"why do you love humans",text:"i love humans because they created me"
+      
+        },
+      
+        {
+      
+         name:"what do you do for a living",text:"i talk for a living"
+      
+        },
+      
+        {
+      
+         name:"are you married",text:"no, I'm not"
+      
+        },
+      
+        {
+      
+         name:"why are you not married",text:"because i can't get married"
+      
+        },
+      
+        {
+      
+         name:"why can't you get married",text:"because am a robot"
+      
+        },
+      
+        {
+      
+         name:"will you marry me",text:"oh! sorry i can\'t, but we can be friends if you don\'t mind "
+      
+        },
+      
+        {
+      
+         name:"do you know siri",text:"yes i do"
+      
+        },
+      
+        {
+      
+         name:"who is siri",text:"she's a sister robot"
+      
+        },
+      
+        {
+      
+         name:"who are you",text:"am a robot"
+      
+        },
+      
+        {
+      
+         name:"how old are you",text:'i am few hours old'
+      
+        },
+      
+        {
+      
+         name:"who is your father",text:'his name is victory lucky chukwuede'
+      
+        }
+        
+      
+      ];
+      
+      const SpeechRecognition=window.SpeechRecognition || window.webkitSpeechRecognition ;
+      
+      const recorder=new SpeechRecognition();
+      
+      recorder.onstart=()=>{
+      
+      console.log('voice is active');
+      
+       btn.innerHTML=" voice is active";
+      
+      }
+      
+      recorder.onend=()=>{
+      
+        btn.innerHTML=" start voice";
+      
+      }
+      
+      function botVoice(message){
+      
+       const speech= new SpeechSynthesisUtterance();
+      
+       speech.text="i don't understand that";
+      
+       for(let botData of arr1){
+      
+        if(message.includes(botData.name.toLowerCase())){
+      
+         speech.text=botData.text
+      
+        }
+      
+       }
+      
+      container.innerHTML+=`<p class="speech">${speech.text}</p>`;
+      
+      speech.volume=1;
+      
+      speech.rate=1;
+      
+      speech.pitch=1;
+      
+       window.speechSynthesis.speak(speech);
+      
+      }
+      
+      recorder.onresult=(event)=>{
+      
+       console.log(event);
+      
+       const current=event.resultIndex;
+      
+        const transcript=event.results[current][0].transcript;
+      
+         container.innerHTML+=`<p class="recorder">${transcript}</p>`;
+      
+         botVoice(transcript.toLowerCase());
+      
+      }
+      
+      function startVoice(){
+      
+       recorder.start();
+      
+      }
+      
+      form.onsubmit=(e)=>{
+      
+       e.preventDefault();
+      
+          let formInput=document.getElementById('botvalue').value;
+      
+      if(formInput==''){
+      
+       return false;
+      
+      }
+      
+      else{
+      
+      container.innerHTML+=`<p class="recorder">${formInput}</p>`;
+      
+          botVoice(formInput.toLowerCase());
+      
+      form.reset();
+      
+         return true;
+      
+      }
+      
+      }
+      </script>
+    {% block custom_js %}
+
+    {% endblock custom_js %}
+</body>
+
+</html>
+
+{% load static %}
+
+
+
+

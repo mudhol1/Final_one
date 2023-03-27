@@ -1,0 +1,20 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block page_title %}Student Enrollment Form{% endblock page_title %}
+
+{% block content %}
+
+<div>
+    <form class="staff_form" method="POST" action="{% url 'staff_form' %}">
+           {%  csrf_token %}
+           <select name="category" id="category">
+            <option value="Sports">sports</option>
+            <option value="Cultural">cultural</option>
+            <option value="Academics">academics</option>
+           </select>
+           <input type="submit" value="Submit"/>
+           
+    </form>
+</div>
+{% endblock content %}
